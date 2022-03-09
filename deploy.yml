@@ -1,0 +1,11 @@
+envs:
+  - name: dev
+    auto_merge: false
+    payload:
+      AZURE_FUNCTIONAPP_NAME: gitploy-dev
+      PUBLISH_PROFILE_VAR_NAME: AZURE_FUNCTIONAPP_PUBLISH_PROFILE_DEV
+  - name: prod
+    auto_merge: false
+    payload:
+      AZURE_FUNCTIONAPP_NAME: gitploy-prod
+      PUBLISH_PROFILE_VAR_NAME: AZURE_FUNCTIONAPP_PUBLISH_PROFILE_PROD

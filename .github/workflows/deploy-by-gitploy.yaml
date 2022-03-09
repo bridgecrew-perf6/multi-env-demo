@@ -1,0 +1,16 @@
+on:
+  deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Deploy to Azure Function
+        run: |
+          echo "Deploy to ${{ github.event.deployment.payload['AZURE_FUNCTIONAPP_NAME'] }}"
+        # uses: Azure/functions-action@v1
+        # with:
+        #   app-name: ${{ github.event.deployment.payload['AZURE_FUNCTIONAPP_NAME'] }}
+        #   publish-profile: ${{ secrets[github.event.deployment.payload['PUBLISH_PROFILE_VAR_NAME'] }}
+        #   respect-funcignore: true
