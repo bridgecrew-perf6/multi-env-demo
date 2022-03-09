@@ -6,6 +6,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - 
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ github.event.deployment.id }}
+          description: Trigger the workflow.
+          state: "queued"
+          token: "${{ github.token }}"
+
+      - 
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ github.event.deployment.id }}
+          description: Start to deploy.
+          state: "queued"
+          token: "${{ github.token }}"
+
+      - 
         name: Deploy to Azure Function
         run: |
           echo "Deploy to ${{ github.event.deployment.payload['AZURE_FUNCTIONAPP_NAME'] }}"
@@ -14,3 +30,21 @@ jobs:
         #   app-name: ${{ github.event.deployment.payload['AZURE_FUNCTIONAPP_NAME'] }}
         #   publish-profile: ${{ secrets[github.event.deployment.payload['PUBLISH_PROFILE_VAR_NAME'] }}
         #   respect-funcignore: true
+      
+      - 
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ github.event.deployment.id }}
+          description: Success to deploy.
+          state: "success"
+          token: "${{ github.token }}"
+      - 
+        name: Deploy failed
+        if: failure()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          deployment_id: ${{ github.event.deployment.id }}
+          description: Failed to deploy.
+          state: "failure"
+          token: "${{ github.token }}"
