@@ -25,7 +25,7 @@ jobs:
       - 
         name: Deploy to Azure Function
         run: |
-          echo "Deploy to $AZURE_FUNCTIONAPP_NAME."
+          echo "Deploy to ${{ env.AZURE_FUNCTIONAPP_NAME }}"
         # uses: Azure/functions-action@v1
         # with:
         #   app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
