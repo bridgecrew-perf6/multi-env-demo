@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - dev
+      - staging
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Set env vars for dev
+        if: github.ref == 'dev'
+        run: |
+          echo "AZURE_FUNCTIONAPP_NAME=gitploy-dev" >> $GITHUB_ENV
+          echo "PUBLISH_PROFILE_VAR_NAME=AZURE_FUNCTIONAPP_PUBLISH_PROFILE_DEV" >> $GITHUB_ENV
+      - 
+        name: Set env vars for prod
+        if: github.ref == 'main'
+        run: |
+          echo "AZURE_FUNCTIONAPP_NAME=gitploy-prod" >> $GITHUB_ENV
+          echo "PUBLISH_PROFILE_VAR_NAME=AZURE_FUNCTIONAPP_PUBLISH_PROFILE_PROD" >> $GITHUB_ENV
+      
+      - 
+        name: Deploy to Azure Function
+        run: |
+          echo "Deploy to $AZURE_FUNCTIONAPP_NAME."
+        # uses: Azure/functions-action@v1
+        # with:
+        #   app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        #   publish-profile: ${{ secrets[env.PUBLISH_PROFILE_VAR_NAME] }}
+        #   respect-funcignore: true
