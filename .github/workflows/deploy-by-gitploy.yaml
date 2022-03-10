@@ -18,7 +18,7 @@ jobs:
         with:
           deployment_id: ${{ github.event.deployment.id }}
           description: Start to deploy.
-          state: "queued"
+          state: "in_progress"
           token: "${{ github.token }}"
 
       - 
